@@ -1,6 +1,7 @@
 
 library("densvis")
 library("ggplot2")
+library("scatterplot3d")
 
 data1 <- data.frame(
   c1 = c(rnorm(1000, 5), rnorm(1000, 0, 0.2)),
@@ -28,4 +29,20 @@ ggplot() +
   scale_colour_discrete(name = "Class") +
   ggtitle("UMAP originale") +
   labs(x = "UMAP1", y = "UMAP2")
+
+
+# Colori per le 4 classi
+colors <- c("red", "green", "blue", "purple")
+
+fit4 <- densvis::umap(data1[, 1:6], n_components = 3L, densmap = TRUE)  
+s3d <- scatterplot3d(fit4[, 1:3], main = "UMAP dp 3D",
+              xlab = "UMAP1", ylab = "UMAP2", zlab = "UMAP3", 
+              pch = data1$class, color = colors[as.numeric(gsub("\\D", "", data1$class))], angle = 45)
+
+legend("topright", legend = c("Class 1", "Class 2", "Class 3", "Class 4"), 
+       col = colors, pch = 16)
+
+#  levels(as.factor(data1$class))
+
+
 
