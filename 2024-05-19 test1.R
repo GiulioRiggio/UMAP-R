@@ -1,4 +1,6 @@
-# citation 
+# Zappia L, Phipson B, Oshlack A (2017). “Splatter: simulation of single-cell RNA sequencing data.” 
+# Genome Biology. doi:10.1186/s13059-017-1305-0, https://doi.org/10.1186/s13059-017-1305-0.
+
 
 library(splatter)
 library(scater)
