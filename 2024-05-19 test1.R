@@ -3,7 +3,8 @@
 
 
 library(splatter)
-library(scater)
+#library(scater)
+#p_load(....)
 
 params <- newSplatParams()
 params
