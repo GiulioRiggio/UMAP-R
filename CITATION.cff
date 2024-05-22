@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Riggio"
+  given-names: "Giulio"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "UMAP-R"
+version: 2.0.4
+doi: 
+date-released: 2024-05-22
+url: "https://github.com/GiulioRiggio/UMAP-R/"
