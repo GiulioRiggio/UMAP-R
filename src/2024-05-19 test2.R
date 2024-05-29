@@ -4,10 +4,11 @@ library("densvis")
 library("ggplot2")
 
 # Creiamo una matrice di 5 righe e 100 colonne con valori casuali tra 10 e 20
-random_matrix <- matrix(runif(n = 5 * 100, min = 0, max = 40), nrow = 5)
-random_matrix2 <- matrix(runif(n = 5 * 100, min = 3000, max = 3040), nrow = 5)
+# 1 solo punto ripetuto 1000 volte viene una nuvoletta  
+random_matrix <- matrix(runif(n = 1 * 100, min = 0, max = 40), nrow = 1)
+#random_matrix2 <- matrix(runif(n = 5 * 100, min = 3000, max = 3040), nrow = 5)
 
-random_matrix <- rbind(random_matrix, random_matrix2)
+#random_matrix <- rbind(random_matrix, random_matrix2)
 
 # Aggiungo la colonna colore all'inizio della matrice
 colori <- c("#FF0000", "#BB00BB", "#0000FF", "#11CC11", "#F0F0F0", "#551100", "#1100CC", "#0F0F0F", "#01AA00", "#FFFF00")
