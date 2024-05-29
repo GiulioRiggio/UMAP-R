@@ -42,14 +42,14 @@ merged_df <- cbind(load_Text_Sepsis_SIRS_EDITED, Text_Sepsis_SIRS_EDITED)
 print(paste("Tempo totale:", duration))
 
 # Calcola la media per tutte le colonne numeriche
-media_colonne <- colMeans(load_Text_Sepsis_SIRS_EDITED)
+media_totale <- colMeans(load_Text_Sepsis_SIRS_EDITED)
 
 # Calcola la mediana per tutte le colonne numeriche
-mediana_colonne <- apply(load_Text_Sepsis_SIRS_EDITED, 2, median)
+mediana_totale <- apply(load_Text_Sepsis_SIRS_EDITED, 2, median)
 
 # Calcola il valore minimo e massimo per tutte le colonne numeriche
-minimo_colonne <- apply(load_Text_Sepsis_SIRS_EDITED, 2, min)
-massimo_colonne <- apply(load_Text_Sepsis_SIRS_EDITED, 2, max)
+minimo_totale <- apply(load_Text_Sepsis_SIRS_EDITED, 2, min)
+massimo_totale <- apply(load_Text_Sepsis_SIRS_EDITED, 2, max)
 
 #ggplot(cluster1, aes(cluster1[, 1], cluster1[, 2], color = 1)) +
 #  geom_point(pch = 19) +
@@ -58,4 +58,19 @@ massimo_colonne <- apply(load_Text_Sepsis_SIRS_EDITED, 2, max)
 #  labs(x = "UMAP1", y = "UMAP2")+
 #  theme(legend.position = "none") 
 
+
+# Aggiunta della colonna CLUSTERS
+merged_df $CLUSTERS <- 0
+
+#update dei clusters
+merged_df$CLUSTERS[merged_df$UMAP1 < 0 & merged_df$UMAP2 > 2.5] <- 1
+merged_df$CLUSTERS[merged_df$UMAP1 > 9 & merged_df$UMAP2 > 2.5] <- 2
+merged_df$CLUSTERS[merged_df$UMAP1 < 9.7 & merged_df$UMAP2 < 0.4] <- 3
+
+ggplot(merged_df, aes(UMAP1, UMAP2, color = CLUSTERS)) +
+  geom_point(pch = 19) +
+  #scale_colour_discrete(name = "Gruppi") +
+  ggtitle(paste("Dataset Text_Sepsis_SIRS_EDITED; iperparametri k =", num_vicini, ", distanza min =", distanza_min)) +
+  labs(x = "UMAP1", y = "UMAP2")+
+  theme(legend.position = "right") 
 
