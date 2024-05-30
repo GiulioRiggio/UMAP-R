@@ -1,6 +1,7 @@
 # File del prof Spain_cardiac_arrest_EDITED
 # Un file per ogni dataset 
 
+library(pacman)
 p_load(readr)
 p_load(ggplot2)
 load_Spain_cardiac_arrest_EDITED <- read_csv("C:\\Users\\giuli\\Documents\\Stage - tesi\\01 UMAP-R stage-tesi\\data\\EHRs_datasets_for_clustering\\journal.pone.0175818_S1Dataset_Spain_cardiac_arrest_EDITED.csv")
