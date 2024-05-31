@@ -1,4 +1,5 @@
 # File del prof Text_Sepsis_SIRS_EDITED
+# random_state = 15L valore ottimo 
 
 library(pacman)
 p_load(readr)
@@ -15,7 +16,7 @@ Text_Sepsis_SIRS_EDITED <- densvis::umap(load_Text_Sepsis_SIRS_EDITED[,],
                                          densmap = FALSE, 
                                          n_neighbors = num_vicini, 
                                          min_dist = distanza_min,
-                                         random_state = 14L)  
+                                         random_state = 15L)  
 
 # Rinomina le colonne
 colnames(Text_Sepsis_SIRS_EDITED) <- c("UMAP1", "UMAP2")
@@ -26,7 +27,8 @@ df_Text_Sepsis_SIRS_EDITED <- as.data.frame(Text_Sepsis_SIRS_EDITED)
 mio_grafico <- ggplot(df_Text_Sepsis_SIRS_EDITED, aes(df_Text_Sepsis_SIRS_EDITED[, 1], df_Text_Sepsis_SIRS_EDITED[, 2], color = 1)) +
   geom_point(pch = 19) +
   #scale_colour_discrete(name = "Gruppi") +
-  ggtitle(paste("Dataset Text_Sepsis_SIRS_EDITED; iperparametri k =", num_vicini, ", distanza min =", distanza_min)) +
+  ggtitle(paste("Dataset Text_Sepsis_SIRS_EDITED; iperparametri k =", 
+                num_vicini, ", distanza min =", distanza_min)) +
   labs(x = "UMAP1", y = "UMAP2")+
   theme(legend.position = "none") 
 
@@ -71,12 +73,23 @@ merged_df$CLUSTERS <- 0
 #update dei clusters
 merged_df$CLUSTERS[merged_df$UMAP1 < 0 & merged_df$UMAP2 > 2.5] <- 1
 merged_df$CLUSTERS[merged_df$UMAP1 > 9 & merged_df$UMAP2 > 2.5] <- 2
-merged_df$CLUSTERS[merged_df$UMAP1 < 9.7 & merged_df$UMAP2 < 0.4] <- 3
+merged_df$CLUSTERS[merged_df$UMAP1 < 9 & merged_df$UMAP2 < -0.2] <- 3
 
-ggplot(merged_df, aes(UMAP1, UMAP2, colour = CLUSTERS)) +
+# Convertiamo la colonna CLUSTERS in un fattore 
+merged_df$CLUSTERS <- as.factor(merged_df$CLUSTERS)
+
+# Definire i colori manualmente
+cluster_colors <- c("0" = "yellow", "1" = "red", "2" = "blue", "3" = "magenta")
+
+grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2, color = CLUSTERS)) +
   geom_point(pch = 19) +
-  #scale_colour_discrete(name = merged_df$CLUSTERS) +
-  scale_color_gradient(low="red", high="blue") +
-  ggtitle(paste("Dataset Text_Sepsis_SIRS_EDITED; iperparametri k =", num_vicini, ", distanza min =", distanza_min)) +
+  scale_colour_manual(values = cluster_colors, name = "Cluster", 
+                      labels = c("Gruppo 1", "Gruppo 2", 
+                                 "Gruppo 3", "Gruppo 4")) +
+  ggtitle(paste("Dataset Text_Sepsis_SIRS_EDITED; iperparametri k =", 
+                num_vicini, ", distanza min =", distanza_min)) +
   labs(x = "UMAP1", y = "UMAP2")+
   theme(legend.position = "right") 
+
+grafico_clusters
+
