@@ -11,7 +11,12 @@ start_time <- Sys.time()
 # Iperparametri
 num_vicini = 5L
 distanza_min = 0.001
-Text_Sepsis_SIRS_EDITED <- densvis::umap(load_Text_Sepsis_SIRS_EDITED[,], densmap = FALSE, n_neighbors = num_vicini, min_dist = distanza_min)  
+Text_Sepsis_SIRS_EDITED <- densvis::umap(load_Text_Sepsis_SIRS_EDITED[,], 
+                                         densmap = FALSE, 
+                                         n_neighbors = num_vicini, 
+                                         min_dist = distanza_min,
+                                         random_state = 14L)  
+
 # Rinomina le colonne
 colnames(Text_Sepsis_SIRS_EDITED) <- c("UMAP1", "UMAP2")
 
