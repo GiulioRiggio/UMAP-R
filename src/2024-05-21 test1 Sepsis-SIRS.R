@@ -1,10 +1,12 @@
 # File del prof Text_Sepsis_SIRS_EDITED
-# random_state = 15L valore ottimo 
+# Valore ottimo random_state = 15L ; num_vicini = 5L ; distanza_min = 0.001
 
 library(pacman)
 p_load(readr)
 library(ggplot2)
 load_Text_Sepsis_SIRS_EDITED <- read_csv("C:\\Users\\giuli\\Documents\\Stage - tesi\\01 UMAP-R stage-tesi\\data\\EHRs_datasets_for_clustering\\journal.pone.0148699_S1_Text_Sepsis_SIRS_EDITED.csv")
+
+
 
 # Segna l'inizio della computazione
 start_time <- Sys.time()
@@ -27,7 +29,7 @@ df_Text_Sepsis_SIRS_EDITED <- as.data.frame(Text_Sepsis_SIRS_EDITED)
 mio_grafico <- ggplot(df_Text_Sepsis_SIRS_EDITED, aes(df_Text_Sepsis_SIRS_EDITED[, 1], df_Text_Sepsis_SIRS_EDITED[, 2], color = 1)) +
   geom_point(pch = 19) +
   #scale_colour_discrete(name = "Gruppi") +
-  ggtitle(paste("Dataset Text_Sepsis_SIRS_EDITED; iperparametri k =", 
+  ggtitle(paste("Dataset Sepsis SIRS; iperparametri k =", 
                 num_vicini, ", distanza min =", distanza_min)) +
   labs(x = "UMAP1", y = "UMAP2")+
   theme(legend.position = "none") 
@@ -59,14 +61,6 @@ media_totale <- colMeans(load_Text_Sepsis_SIRS_EDITED)
 minimo_totale <- apply(load_Text_Sepsis_SIRS_EDITED, 2, min)
 massimo_totale <- apply(load_Text_Sepsis_SIRS_EDITED, 2, max)
 
-#ggplot(cluster1, aes(cluster1[, 1], cluster1[, 2], color = 1)) +
-#  geom_point(pch = 19) +
-#  #scale_colour_discrete(name = "Gruppi") +
-#  ggtitle("cluster1") +
-#  labs(x = "UMAP1", y = "UMAP2")+
-#  theme(legend.position = "none") 
-
-
 # Aggiunta della colonna CLUSTERS
 merged_df$CLUSTERS <- 0
 
@@ -81,15 +75,16 @@ merged_df$CLUSTERS <- as.factor(merged_df$CLUSTERS)
 # Definire i colori manualmente
 cluster_colors <- c("0" = "yellow", "1" = "red", "2" = "blue", "3" = "magenta")
 
-grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2, color = CLUSTERS)) +
+grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2, 
+                                          color = CLUSTERS)) +
   geom_point(pch = 19) +
   scale_colour_manual(values = cluster_colors, name = "Cluster", 
                       labels = c("Gruppo 1", "Gruppo 2", 
                                  "Gruppo 3", "Gruppo 4")) +
-  ggtitle(paste("Dataset Text_Sepsis_SIRS_EDITED; iperparametri k =", 
+  ggtitle(paste("Dataset Sepsis SIRS; iperparametri k =", 
                 num_vicini, ", distanza min =", distanza_min)) +
   labs(x = "UMAP1", y = "UMAP2")+
-  theme(legend.position = "right") 
+  theme(legend.position = "bottom") 
 
 grafico_clusters
 
