@@ -5,6 +5,9 @@
 library(pacman)
 library(DT)
 
+# Elimino le colonne interamente NaN dovuto a meno di 4 clusters 
+statistiche <- statistiche[, colSums(is.na(statistiche)) != nrow(statistiche)]
+
 # Assuming df is your dataframe named statistiche
 df <- statistiche
 
