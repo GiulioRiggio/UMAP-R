@@ -1,4 +1,6 @@
-# Tabelle colorate
+# Crea tabelle colorate.
+# secondo la logica 33.3% superiore o inferiore la colonna di riferimento
+# Copio con: Zoom → Ctrl+Alt+Stamp
 
 library(pacman)
 library(DT)
@@ -12,11 +14,13 @@ rowCallback <- JS(
   "$('td:eq(0)', row).css('font-weight', 'bold');",  # Apply bold to inputval
   "$('td', row).css('font-size', '12px');",  # Apply font size reduction to all cells
   "function applyColor(value, reference, index) {",
-  "if (parseFloat(value) < parseFloat(reference) - (parseFloat(reference) / 3)) {",
-  "$('td:eq(' + index + ')', row).css('background-color', 'red');",
-  "} else if (parseFloat(value) > parseFloat(reference) + (parseFloat(reference) / 3)) {",
-  "$('td:eq(' + index + ')', row).css('background-color', 'magenta');",
-  "}",
+  "if (reference !== 0) {",
+    "if (parseFloat(value) < parseFloat(reference) - (parseFloat(reference) / 3)) {",
+    "$('td:eq(' + index + ')', row).css('background-color', 'red');",
+    "} else if (parseFloat(value) > parseFloat(reference) + (parseFloat(reference) / 3)) {",
+    "$('td:eq(' + index + ')', row).css('background-color', 'yellow');",
+    "}",
+  "}",  
   "}",
   "applyColor(data[2], data[1], 2);",  # Apply to column 2
   "applyColor(data[3], data[1], 3);",  # Apply to column 3
