@@ -75,15 +75,16 @@ merged_df$CLUSTERS <- as.factor(merged_df$CLUSTERS)
 # Definire i colori manualmente
 cluster_colors <- c("0" = "yellow", "1" = "red", "2" = "blue", "3" = "magenta")
 
-grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2, color = CLUSTERS)) +
+grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2, 
+                                          color = CLUSTERS)) +
   geom_point(pch = 19) +
   scale_colour_manual(values = cluster_colors, name = "Cluster", 
                       labels = c("Gruppo 1", "Gruppo 2", 
-                                 "Gruppo 3", "Gruppo 4")) +
+                                 "Gruppo 3")) +
   ggtitle(paste("Dataset Depression-Heart failure; iperparametri k =", 
                 num_vicini, ", distanza min =", distanza_min)) +
   labs(x = "UMAP1", y = "UMAP2")+
-  theme(legend.position = "right") 
+  theme(legend.position = "bottom") 
 
 grafico_clusters
 
