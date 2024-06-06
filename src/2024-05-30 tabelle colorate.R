@@ -5,6 +5,9 @@
 library(pacman)
 library(DT)
 
+# Rimpiazzo i valori -Inf dovuti a meno di 4 clusters 
+statistiche <- replace(statistiche, is.infinite(as.matrix(statistiche)), NA)
+
 # Elimino le colonne interamente NaN dovuto a meno di 4 clusters 
 statistiche <- statistiche[, colSums(is.na(statistiche)) != nrow(statistiche)]
 
