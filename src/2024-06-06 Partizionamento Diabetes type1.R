@@ -154,7 +154,7 @@ p0_grafico <- ggplot(part_diabetes_type1_0,
   geom_point(size=output_start + slope * (part_diabetes_type1_0$bolus - input_start) , alpha=0.5) +
   scale_colour_manual(values = insulin_colors, name = "Insulin", 
                       labels = c("no", "si")) +
-  scale_shape_manual(values=c(3, 16, 17), breaks = genders) +
+  scale_shape_manual(values=c(3, 20), breaks = genders) +
   ggtitle(paste("free.testosterone [0.4,5.3]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -185,7 +185,7 @@ p1_grafico <- ggplot(part_diabetes_type1_1,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = insulin_colors, name = "Insulin", 
                       labels = c("no", "si")) +
-  scale_shape_manual(values=c(3, 16, 17), breaks = genders) +
+  scale_shape_manual(values=c(3, 20), breaks = genders) +
   ggtitle(paste("free.testosterone (5.3,18.1]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 

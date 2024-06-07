@@ -133,6 +133,8 @@ part_Sepsis_SIRS_1$Mortality <- as.factor(part_Sepsis_SIRS_1$Mortality)
 part_Sepsis_SIRS_2$Mortality <- as.factor(part_Sepsis_SIRS_2$Mortality)
 part_Sepsis_SIRS_3$Mortality <- as.factor(part_Sepsis_SIRS_3$Mortality)
 
+# Creazione del vettore che associa alle shape
+genders <- c("female", "male")
 
 # Creo gli oggetti grafici 
 p0_grafico <- ggplot(part_Sepsis_SIRS_0, 
@@ -144,6 +146,7 @@ p0_grafico <- ggplot(part_Sepsis_SIRS_0,
   geom_point(size=output_start + slope * (part_Sepsis_SIRS_0$EOC - input_start) , alpha=0.5) +
   scale_colour_manual(values = mortality_colors, name = "Mortalità", 
                       labels = c("vivo", "morto ")) +
+  scale_shape_manual(values=c(3, 20), breaks = genders) +
   ggtitle(paste("PLTC [11,152]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -174,6 +177,7 @@ p1_grafico <- ggplot(part_Sepsis_SIRS_1,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = mortality_colors, name = "Mortalità", 
                       labels = c("vivo", "morto")) +
+  scale_shape_manual(values=c(3, 20), breaks = genders) +
   ggtitle(paste("PLTC (342,854]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -204,6 +208,7 @@ p2_grafico <- ggplot(part_Sepsis_SIRS_2,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = mortality_colors, name = "Mortalità", 
                       labels = c("vivo", "morto")) +
+  scale_shape_manual(values=c(3, 20), breaks = genders) +
   ggtitle(paste("PLTC (289,342]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -235,6 +240,7 @@ p3_grafico <- ggplot(part_Sepsis_SIRS_3,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = mortality_colors, name = "Mortalità", 
                       labels = c("vivo", "morto")) +
+  scale_shape_manual(values=c(3, 20), breaks = genders) +
   ggtitle(paste("PLTC (152,289]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 

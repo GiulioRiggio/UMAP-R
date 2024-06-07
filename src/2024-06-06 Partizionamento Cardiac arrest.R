@@ -141,6 +141,9 @@ part_cardiac_arrest_2$'Asystole' <- as.factor(part_cardiac_arrest_2$'Asystole')
 #part_cardiac_arrest_1$Sex <- as.character(part_cardiac_arrest_1$Sex)
 #part_cardiac_arrest_2$Sex <- as.character(part_cardiac_arrest_2$Sex)
 
+# Creazione del vettore che associa alle shape
+genders <- c("female", "male")
+
 # Creo gli oggetti grafici 
 p0_grafico <- ggplot(part_cardiac_arrest_0, 
                      aes(part_cardiac_arrest_0[, 1], 
@@ -151,6 +154,7 @@ p0_grafico <- ggplot(part_cardiac_arrest_0,
   geom_point(size=output_start + slope * (part_cardiac_arrest_0$Time_min - input_start) , alpha=0.5) +
   scale_colour_manual(values = asystole_colors, name = "Asystole", 
                       labels = c("vivo", "morto ")) +
+  scale_shape_manual(values=c(3, 16, 17), breaks = genders) +
   ggtitle(paste("Age years [0.01,56]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -181,6 +185,7 @@ p1_grafico <- ggplot(part_cardiac_arrest_1,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = asystole_colors, name = "Asystole", 
                       labels = c("vivo", "morto")) +
+  scale_shape_manual(values=c(3, 16, 17), breaks = genders) +
   ggtitle(paste("Age years (62,97]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -211,6 +216,7 @@ p2_grafico <- ggplot(part_cardiac_arrest_2,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = asystole_colors, name = "Asystole", 
                       labels = c("vivo", "morto")) +
+  scale_shape_manual(values=c(3, 16, 17), breaks = genders) +
   ggtitle(paste("Age years (56,62]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 

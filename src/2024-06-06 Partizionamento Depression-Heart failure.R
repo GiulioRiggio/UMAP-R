@@ -141,6 +141,9 @@ part_depression_heart_0$Hospitalized <- as.character(part_depression_heart_0$Hos
 part_depression_heart_1$Hospitalized <- as.character(part_depression_heart_1$Hospitalized)
 part_depression_heart_2$Hospitalized <- as.character(part_depression_heart_2$Hospitalized)
 
+# Creazione del vettore che associa alle shape
+ospedalizzato <- c("0", "1")
+
 # Creo gli oggetti grafici 
 p0_grafico <- ggplot(part_depression_heart_0, 
                      aes(part_depression_heart_0[, 1], 
@@ -151,6 +154,7 @@ p0_grafico <- ggplot(part_depression_heart_0,
   geom_point(size=output_start + slope * (part_depression_heart_0$TimeHFtoDeath - input_start) , alpha=0.5) +
   scale_colour_manual(values = mortality_colors, name = "Mortalità", 
                       labels = c("vivo", "morto ")) +
+  scale_shape_manual(values=c(3, 20), breaks = ospedalizzato, labels = c("no", "si")) +
   ggtitle(paste("Time from HF to hospitalization (days) [1,467]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -181,6 +185,7 @@ p1_grafico <- ggplot(part_depression_heart_1,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = mortality_colors, name = "Mortalità", 
                       labels = c("vivo", "morto")) +
+  scale_shape_manual(values=c(3, 20), breaks = ospedalizzato, labels = c("no", "si")) +
   ggtitle(paste("Time from HF to hospitalization (days) (571,730]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
@@ -211,6 +216,7 @@ p2_grafico <- ggplot(part_depression_heart_2,
   #scale_colour_discrete(name = "Gruppi") +
   scale_colour_manual(values = mortality_colors, name = "Mortalità", 
                       labels = c("vivo", "morto")) +
+  scale_shape_manual(values=c(3, 20), breaks = ospedalizzato, labels = c("no", "si")) +
   ggtitle(paste("Time from HF to hospitalization (days) (467,571]")) +
   theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
         panel.background = element_rect(fill = "#FFFFFF"), 
