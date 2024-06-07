@@ -11,7 +11,7 @@ load_cardiac_arrest <- read_csv("C:\\Users\\giuli\\Documents\\Stage - tesi\\01 U
 # Seleziona le righe con valori mancanti in qualsiasi colonna
 #mancanti <- load_cardiac_arrest[rowSums(is.na(load_cardiac_arrest)) > 0, ]
 
-# Esempio: Rimuovi le righe con NA dal dataframe 'tuo_dataframe'
+# Esempio: Rimuovi le righe con NA dal dataframe
 load_cardiac_arrest <- na.omit(load_cardiac_arrest)
 
 

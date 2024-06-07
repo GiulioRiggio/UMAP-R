@@ -6,19 +6,19 @@ p_load(readr)
 library(ggplot2)
 load_diabetes_type1 <- read_csv("C:\\Users\\giuli\\Documents\\Stage - tesi\\01 UMAP-R stage-tesi\\data\\EHRs_datasets_for_clustering\\Takashi2019_diabetes_type1_dataset_preprocessed.csv")
 # Elimino la colonna id
-load_diabetes_type1 <- load_diabetes_type1[-1]
+#load_diabetes_type1 <- load_diabetes_type1[-1]
 
 # Segna l'inizio della computazione
 start_time <- Sys.time()
 
 # Iperparametri
-num_vicini = 3L
+num_vicini = 4L
 distanza_min = 0.001
 diabetes_type1 <- densvis::umap(load_diabetes_type1[,], 
                                           densmap = FALSE, 
                                           n_neighbors = num_vicini, 
                                           min_dist = distanza_min,
-                                          random_state = 17L)    
+                                          random_state = 13L)    
 
 # Rinomina le colonne
 colnames(diabetes_type1) <- c("UMAP1", "UMAP2")
@@ -65,7 +65,7 @@ massimo_totale <- apply(load_diabetes_type1, 2, max)
 merged_df$CLUSTERS <- 0
 
 #update dei clusters
-merged_df$CLUSTERS[merged_df$UMAP1 < 4 & merged_df$UMAP2 > 4] <- 1
+merged_df$CLUSTERS[merged_df$UMAP1 > 7 & merged_df$UMAP2 > 3] <- 1
 #merged_df$CLUSTERS[merged_df$UMAP1 < 4 & merged_df$UMAP2 < 4] <- 2
 #merged_df$CLUSTERS[merged_df$UMAP1 < 9 & merged_df$UMAP2 < -0.2] <- 3
 
@@ -81,7 +81,7 @@ grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2,
   scale_colour_manual(values = cluster_colors, name = "Cluster", 
                       labels = c("Gruppo 1", "Gruppo 2", 
                                  "Gruppo 3")) +
-  ggtitle(paste("Dataset Depression-Heart failure; iperparametri k =", 
+  ggtitle(paste("Dataset Diabetes type1; iperparametri k =", 
                 num_vicini, ", distanza min =", distanza_min)) +
   labs(x = "UMAP1", y = "UMAP2")+
   theme(legend.position = "bottom") 

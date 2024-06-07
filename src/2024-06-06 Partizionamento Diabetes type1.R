@@ -67,9 +67,9 @@ names(part_diabetes_type1)[names(part_diabetes_type1) == "sex_0man_1woman"] <- "
 insulin_colors <- c("0" = "green", "1" = "red")
 
 # Iperparametri
-num_vicini = 3L
+num_vicini = 4L
 distanza_min = 0.001
-r_s = 17L
+r_s = 13L
 
 # P 0
 part_diabetes_type1_0 <- densvis::umap(part_diabetes_type1[part_diabetes_type1$partizioni==0,-ncol(part_diabetes_type1)], 
