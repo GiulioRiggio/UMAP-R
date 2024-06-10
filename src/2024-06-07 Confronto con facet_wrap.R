@@ -4,7 +4,10 @@
 
 library(pacman)
 p_load(readr)
+p_load(dplyr)
 library(ggplot2)
+p_load(gridExtra)
+p_load(ggpubr)
 
 input_start <- 0
 input_end <- 1
@@ -143,13 +146,27 @@ progressivo_colors <- c("9" = "green", "4" = "green", "6" = "green", "24" = "red
 # Convertiamo la colonna outcome in un fattore 
 confronto_casuale$'progressivo' <- as.factor(confronto_casuale$'progressivo')
 
+# Dati dei punti
+x1 <- 3
+y1 <- 10
+x2 <- 5
+y2 <- 7
+
+# Calcola la pendenza e l'intercetta
+m <- (y2 - y1) / (x2 - x1)
+q <- y1 - m * x1
+
 # Creazione del grafico non suddiviso
 ggplot(confronto_casuale, aes(UMAP1, UMAP2, color = progressivo)) +
   geom_point() +
   geom_text(aes(label = progressivo), hjust = -0.4, vjust = 0.5) +
   scale_colour_manual(values = progressivo_colors)  +
+  geom_abline(intercept = q, slope = m, color = "brown") +
   ggtitle(paste("Dataset 60 punti, 5 dimensioni; Singola proiezione UMAP non suddivisa")) +
-  theme(legend.position = "none")  # Rimuovi la legenda
+  labs(subtitle='Cluster 1 sopra la linea; Cluster 2 sotto la linea') +  
+  theme(legend.position = "none",
+        plot.title = element_text(color = "blue", face = "bold.italic", size = 12),
+        plot.subtitle=element_text(size=9, face='italic', color='brown'))  # Rimuovi la legenda
   
 # Creazione del grafico suddiviso 
 ggplot(confronto_casuale, aes(UMAP1, UMAP2, color = progressivo)) +
@@ -160,10 +177,43 @@ ggplot(confronto_casuale, aes(UMAP1, UMAP2, color = progressivo)) +
            labeller = labeller(partizioni = c("1" = "età < 41", "2" = "età >= 41")),
            scales = "free") +
   ggtitle(paste("Dataset 60 punti, 5 dimensioni; Singola proiezione UMAP suddivisa con facet_wrap()")) +
-  theme(legend.position = "none")  # Rimuovi la legenda
+  labs(subtitle='Persa la struttura globale dei dati, punti rossi e verdi insieme') +  
+  theme(legend.position = "none",
+        plot.title = element_text(color = "blue", face = "bold.italic", size = 12),
+        plot.subtitle=element_text(size=9, face='italic', color='brown'))  # Rimuovi la legenda
 
 # 24, 27, 35
 # 9, 4, 6
 
+# Cluster sopra la linea 
+confronto_casuale$CLUSTERS <- 1
+
+# Cluster sotto la linea 
+confronto_casuale$CLUSTERS[(confronto_casuale$UMAP1 < 5 & confronto_casuale$UMAP2 < 8) | (confronto_casuale$UMAP1 < 3.5 & confronto_casuale$UMAP2 < 9)] <- 2
+
+p0_grafico <- ggplot(confronto_casuale[confronto_casuale$CLUSTERS == 1, ], 
+                     aes(UMAP1, UMAP2, color = progressivo)) +
+  geom_point() +
+  geom_text(aes(label = progressivo), hjust = -0.4, vjust = 0.5) +
+  scale_colour_manual(values = progressivo_colors)  +
+  ggtitle(paste("Cluster 1 sopra la linea")) +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 9, color = "brown", face = "italic"))  # Rimuovi la legenda
+
+p1_grafico <- ggplot(confronto_casuale[confronto_casuale$CLUSTERS == 2, ], 
+                     aes(UMAP1, UMAP2, color = progressivo)) +
+  geom_point() +
+  geom_text(aes(label = progressivo), hjust = -0.4, vjust = 0.5) +
+  scale_colour_manual(values = progressivo_colors)  +
+  ggtitle(paste("Cluster 2 sotto la linea")) +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 9, color = "brown", face = "italic"))  # Rimuovi la legenda
+
+final_display <- ggarrange(p0_grafico, p1_grafico, 
+                           ncol = 2, nrow = 1, 
+                           common.legend = FALSE, legend = "none")
+
+annotate_figure(final_display, top = text_grob("Dataset 60 punti, 5 dimensioni clusterizzato prima delle 2 computazioni UMAP", 
+                                               color = "blue", face = "bold.italic", size = 12))
 
 
