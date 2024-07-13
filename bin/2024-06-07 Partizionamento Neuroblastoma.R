@@ -169,10 +169,16 @@ p0_grafico <- ggplot(part_neuroblastoma_0,
         ),
         # Aumenta la distanza tra legenda e grafico
         legend.box.margin = unit(4, "pt"),   
-        # Aumenta la distanza tra le legende
-        legend.spacing.y = unit(2, "cm")
+        # Aumenta la distanza tra le legende, tesi 
+        #legend.spacing.y = unit(2, "cm")
+        # Aumenta la distanza tra le legende, slide 
+        legend.spacing.y = unit(0.1, "cm")
   ) +
   xlab(NULL) + ylab(NULL)
+
+
+# Crea una legenda separata per le slide
+legend <- get_legend(p0_grafico)
 
 
 p1_grafico <- ggplot(part_neuroblastoma_1, 
@@ -267,11 +273,16 @@ p2_grafico <- ggplot(part_neuroblastoma_2,
 #  ) +
 #  xlab(NULL) + ylab(NULL)
 
+# per la tesi 
+#final_display <- ggarrange(p0_grafico, p2_grafico, 
+#                           p1_grafico, 
+#                           ncol = 2, nrow = 2, 
+#                           common.legend = TRUE, legend = "bottom")
 
-final_display <- ggarrange(p0_grafico, p2_grafico, 
-                           p1_grafico, 
-                           ncol = 2, nrow = 2, 
-                           common.legend = TRUE, legend = "bottom")
+# per le slide
+final_display <- ggarrange(p0_grafico + theme(legend.position = "none"), p2_grafico + theme(legend.position = "none"),  
+                           p1_grafico + theme(legend.position = "none"), legend,
+                           ncol = 2, nrow = 2)
 
 annotate_figure(final_display, top = text_grob("UMAP plot for neuroblastoma dataset", 
                                                color = "blue", face = "bold.italic", size = 15))

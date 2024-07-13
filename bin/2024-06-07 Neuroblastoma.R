@@ -75,8 +75,11 @@ merged_df$CLUSTERS[merged_df$UMAP1 > 10.2 & merged_df$UMAP2 > 11.2] <- 2
 # Convertiamo la colonna CLUSTERS in un fattore 
 merged_df$CLUSTERS <- as.factor(merged_df$CLUSTERS)
 
-# Definire i colori manualmente
-cluster_colors <- c("0" = "yellow", "1" = "red", "2" = "blue", "3" = "magenta")
+# Definire i colori manualmente, per la tesi 
+#cluster_colors <- c("0" = "yellow", "1" = "red", "2" = "blue", "3" = "magenta")
+
+# per le slide
+cluster_colors <- c("0" = "darkgreen", "1" = "red", "2" = "blue", "3" = "magenta")
 
 grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2, 
                                           color = CLUSTERS)) +
@@ -87,7 +90,8 @@ grafico_clusters <- ggplot(merged_df, aes(x=UMAP1, y=UMAP2,
   ggtitle(paste("Dataset Neuroblastoma; iperparametri k =", 
                 num_vicini, ", distanza min =", distanza_min)) +
   labs(x = "UMAP1", y = "UMAP2")+
-  theme(legend.position = "bottom") 
+  #theme(legend.position = "bottom")    # per la tesi
+  theme(legend.position = "none")     # per le slide
 
 grafico_clusters
 

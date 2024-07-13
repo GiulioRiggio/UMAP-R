@@ -11,6 +11,9 @@ if (!require("plotly")) install.packages("plotly")
 library(pacman)
 p_load(plotly)
 library(ggplot2)
+p_load(gridExtra)
+p_load(ggpubr)
+
 
 # Numero di punti
 n_points_sfera_piccola <- 200
@@ -77,7 +80,7 @@ fig <- plot_ly() %>%
 fig
 
 # ---------------
-# Proiezioni ortogonali 
+# Proiezioni ortogonali plot_ly
 
 # Proiezione sul piano XY (2D)
 p_xy <- plot_ly() %>%
@@ -133,6 +136,105 @@ combined_plot <- combined_plot %>% layout(
 # Visualizza il grafico combinato
 combined_plot
 
+
+# ---------------
+# Proiezioni ortogonali ggplot2
+
+
+outcome_colors <- c("yellow" = "yellow", "red" = "#CC0000")
+
+
+p0_grafico <- ggplot(combined_points, 
+                     aes(combined_points[, 1], 
+                         combined_points[, 2], 
+                         color = color)) +
+  geom_point(size=2, alpha=0.5) +
+  scale_colour_manual(values = outcome_colors, name = "Cluster", 
+                      labels = c("Cluster esterno 30 punti", "Cluster interno 200 punti")) +
+  ggtitle(paste("Proiezione XY")) +
+  theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
+        panel.background = element_rect(fill = "#FFFFFF"), 
+        panel.grid.major = element_line(color = "grey"),
+        legend.title=element_text(color="blue", size=10, face="italic"),
+        legend.text=element_text(color="lightblue", size=9, face="bold.italic"),
+        plot.background = element_rect(colour = "white", linewidth = 1),
+        legend.background = element_rect(
+          #fill = "lemonchiffon", 
+          colour = "grey", 
+          linewidth = 0.5
+        ),
+        # Aumenta la distanza tra legenda e grafico
+        legend.box.margin = unit(4, "pt"),   
+        # Aumenta la distanza tra le legende
+        legend.spacing.y = unit(2, "cm")
+  ) +
+  xlab(NULL) + ylab(NULL)
+
+# Crea una legenda separata
+legend <- get_legend(p0_grafico)
+
+
+p1_grafico <- ggplot(combined_points, 
+                     aes(combined_points[, 1], 
+                         combined_points[, 3], 
+                         color = color)) +
+  geom_point(size=2, alpha=0.5) +
+  scale_colour_manual(values = outcome_colors, name = "Cluster", 
+                      labels = c("Cluster esterno 30 punti", "Cluster interno 200 punti")) +
+  ggtitle(paste("Proiezione XZ")) +
+  theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
+        panel.background = element_rect(fill = "#FFFFFF"), 
+        panel.grid.major = element_line(color = "grey"),
+        legend.title=element_text(color="blue", size=10, face="italic"),
+        legend.text=element_text(color="lightblue", size=9, face="bold.italic"),
+        plot.background = element_rect(colour = "white", linewidth = 1),
+        legend.background = element_rect(
+          #fill = "lemonchiffon", 
+          colour = "grey", 
+          linewidth = 0.5
+        ),
+        # Aumenta la distanza tra legenda e grafico
+        legend.box.margin = unit(4, "pt"),   
+        # Aumenta la distanza tra le legende
+        legend.spacing.y = unit(2, "cm")
+  ) +
+  xlab(NULL) + ylab(NULL)
+
+
+
+p2_grafico <- ggplot(combined_points, 
+                     aes(combined_points[, 2], 
+                         combined_points[, 3], 
+                         color = color)) +
+  geom_point(size=2, alpha=0.5) +
+  scale_colour_manual(values = outcome_colors, name = "Cluster", 
+                      labels = c("Cluster esterno 30 punti", "Cluster interno 200 punti")) +
+  ggtitle(paste("Proiezione YZ")) +
+  theme(plot.title = element_text(color="blue", size=10, face="italic", hjust = 0.5),
+        panel.background = element_rect(fill = "#FFFFFF"), 
+        panel.grid.major = element_line(color = "grey"),
+        legend.title=element_text(color="blue", size=10, face="italic"),
+        legend.text=element_text(color="lightblue", size=9, face="bold.italic"),
+        plot.background = element_rect(colour = "white", linewidth = 1),
+        legend.background = element_rect(
+          #fill = "lemonchiffon", 
+          colour = "grey", 
+          linewidth = 0.5
+        ),
+        # Aumenta la distanza tra legenda e grafico
+        legend.box.margin = unit(4, "pt"),   
+        # Aumenta la distanza tra le legende
+        legend.spacing.y = unit(2, "cm")
+  ) +
+  xlab(NULL) + ylab(NULL)
+
+
+final_display <- ggarrange(p0_grafico + theme(legend.position = "none"), p2_grafico + theme(legend.position = "none"),  
+                           p1_grafico + theme(legend.position = "none"), legend,
+                           ncol = 2, nrow = 2)
+
+annotate_figure(final_display, top = text_grob("Proiezioni ortogonali 2D", 
+                                               color = "blue", face = "bold.italic", size = 15))
 
 
 # ---------------

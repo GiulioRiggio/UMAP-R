@@ -141,7 +141,7 @@ df_neuroblastoma <- as.data.frame(df_umap_casuale)
 # Unisci i due data frame
 confronto_casuale <- cbind(df_casuale, df_umap_casuale)
 
-progressivo_colors <- c("9" = "green", "4" = "green", "6" = "green", "24" = "red", "27" = "red", "35" = "red")
+progressivo_colors <- c("9" = "darkgreen", "4" = "darkgreen", "6" = "darkgreen", "24" = "red", "27" = "red", "35" = "red")
 
 # Convertiamo la colonna outcome in un fattore 
 confronto_casuale$'progressivo' <- as.factor(confronto_casuale$'progressivo')
