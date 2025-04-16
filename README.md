@@ -7,7 +7,7 @@ $${\color{green} Ten\ simple\ rules\ for\ a\ computational\ biologist’s\ labor
 The files mammoth_3d_50k.json and mammoth_3d.json were downloaded from https://github.com/PAIR-code/understanding-umap  <br/>
 
 Esempio sequenza di lancio:  <br/>
-File "2024-06-07 Neuroblastoma.R" inizia l'analisi del neuroblastoma  <br/>
+File "2024-06-07 Neuroblastoma.R" inizia l'analisi del neuroblastoma, dataset 10_7717_peerj_5665_dataYM2018_neuroblastoma.csv  <br/>
 File "2024-05-30 tabella medie.R" crea il df statistiche  <br/>
 File "2024-05-30 tabelle colorate.R" crea la tabella a partire dal df statistiche  <br/>
 File "2024-05-31 tabella minimi.R" crea il df statistiche  <br/>
